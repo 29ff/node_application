@@ -6,7 +6,8 @@ const storeSchema = new mongoose.Schema({
   name: {
     type: String,
     trim: true,
-    required: 'Please enter a store name!'
+    required: 'Please enter a store name!',
+    unique: true
   },
   slug: String,
   description: {
@@ -21,7 +22,7 @@ storeSchema.pre('save', function(next) {
     return next();
   }
   this.slug = slug(this.name);
-  next();
+  return next();
 });
 
 module.exports = mongoose.model('Store', storeSchema);
